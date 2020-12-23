@@ -1,8 +1,8 @@
 ---
 title: Frequently Asked Questions (FAQ)
-permalink: /es/faq/
+permalink: /ru/faq/
 layout: page
-language: es
+language: ru
 ---
 
 Translation needed.

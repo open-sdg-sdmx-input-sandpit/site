@@ -1,8 +1,8 @@
 ---
 layout: categories
-permalink: /es/categories/
+permalink: /ru/categories/
 title: Categories
-language: es
+language: ru
 ---
 
 Translation needed.
