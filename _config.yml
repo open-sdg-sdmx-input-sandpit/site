@@ -30,8 +30,8 @@ languages:
 remote_theme: brockfanning/open-sdg@alternate-unit-and-series-columns
 
 data_fields:
-  series: SDG Series
-  units: Unit of measure
+  series: SERIES
+  units: UNIT_MEASURE
 
 # Replace this title as needed.
 title: Indicators For The Sustainable Development Goals
