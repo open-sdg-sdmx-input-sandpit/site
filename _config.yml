@@ -11,7 +11,6 @@ remote_theme: open-sdg/open-sdg@1.2.0-beta2
 # Replace this title as needed.
 title: Indicators For The Sustainable Development Goals
 url: ""
-data_dir: data
 
 
 # Pages
