@@ -108,13 +108,13 @@ var translations = {
         
 
         <!--[if IE 9]>
-        <script src="/site/assets/js/lib/classList.js"></script>
+        <script src="site/assets/js/lib/classList.js"></script>
         <![endif]-->
 
         <!-- Favicons ================================================== -->
         <!-- 128x128 -->
-        <link rel="shortcut icon" type="image/ico" href="/site/assets/img/favicons/favicon.ico">
-        <link rel="icon" type="image/png" href="/site/assets/img/favicons/favicon.png"><!-- 192x192, as recommended for Android
+        <link rel="shortcut icon" type="image/ico" href="site/assets/img/favicons/favicon.ico">
+        <link rel="icon" type="image/png" href="site/assets/img/favicons/favicon.png"><!-- 192x192, as recommended for Android
         http://updates.html5rocks.com/2014/11/Support-for-theme-color-in-Chrome-39-for-Android
         -->
 
@@ -124,7 +124,7 @@ var translations = {
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" crossorigin="">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
         <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css" crossorigin="">
-        <link rel="stylesheet" href="/site/assets/css/style.css?v=20210115142507">
+        <link rel="stylesheet" href="site/assets/css/style.css?v=20210115173303">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet" crossorigin="">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -157,7 +157,7 @@ var translations = {
 
     <div class="logo-and-mobile-widgets">
       <a class="navbar-brand" href="/site/ru/" id="home">
-        <img src="/site/assets/img/SDG_logo.png" alt="Цели в области устойчивого развития - 17 Целей, чтобы преобразовать наш мир" />
+        <img src="site/assets/img/SDG_logo.png" alt="Цели в области устойчивого развития - 17 Целей, чтобы преобразовать наш мир" />
       </a>
 
       <div class="mobile-widgets">
@@ -370,10 +370,9 @@ var translations = {
 <div class="container">
   <ol class="breadcrumb">
   
-  <li><a href="/site/ru/">Главная</a></li>
+  
   <li><a href="/site/ru/4" title="Обеспечение всеохватного и справедливого качественного образования и поощрение
 возможности обучения на протяжении всей жизни для всех">Цель 4</a></li>
-  <li class="active">Показатель 4.6.1</li>
   
 </ol>
 
@@ -383,7 +382,7 @@ var translations = {
     <div class="row">
       <div class="col-xs-4 col-md-3 col-lg-2 goal-icon goal-tiles">
         <a href="/site/ru/4" title="Посмотреть список индикаторов этой цели">
-          <img src="https://open-sdg.org/sdg-translations/assets/img/goals/ru/4.png" alt="Качественное образование - Цель 4" id="goal-4"/>
+          <img src="https://open-sdg.org/sdg-translations/assets/img/goals/ru/4." alt="Качественное образование - Цель 4" id="goal-4"/>
         </a>
       </div>
       <div class="col-xs-8 col-md-9 col-lg-10 indicator-details">
@@ -421,16 +420,16 @@ var translations = {
 достигшая, по меньшей мере, установленного уровня
 функциональной a) грамотности и b) математической
 грамотности, в разбивке по полу."
-  data-charttitles="null"
+  data-charttitles="[]"
   data-measurementunit=""
   data-showdata="false"
   data-graphtype="line"
   data-geocoderegex=""
-  data-showmap=""
-  data-startvalues="null"
-  data-graphlimits="null"
+  data-showmap="false"
+  data-startvalues="[]"
+  data-graphlimits="[]"
   data-stackeddisaggregation=""
-  data-graphannotations="null"
+  data-graphannotations="[]"
   data-indicatordownloads="null"
 >
   
@@ -683,8 +682,8 @@ data-event-label="Change to Sources tab"
             
 
             
-              <a href="https://github.com/open-sdg-sdmx-input-sandpit/data/commit/16980141966b45a178c509840e5706f3fdee6dce" target="_blank">
-                2020-12-23: see changes on GitHub <span class="visuallyhidden">открывается в новой вкладке</span>
+              <a href="https://github.com/open-sdg-sdmx-input-sandpit/data/commit/11ac12db8c23d3742d8b7e3792f2d2ec46f014e1" target="_blank">
+                2021-01-15: see changes on GitHub <span class="visuallyhidden">открывается в новой вкладке</span>
               </a>
             
 
@@ -1095,7 +1094,23 @@ data-event-label="Change to Sources tab"
             
             
             <li><a href="/site/ru/config">Configuration</a></li>
-            </ul>
+            <li class="language-toggle-menu-footer">
+              
+
+
+
+
+
+  <div class="language-toggle-container">
+  <i class="fa fa-globe language-toggle-globe-links"></i>
+  <ul class="language-toggle-links"><li>
+      <a class="language-toggle-link" href="/site/4-6-1/">English</a>
+    </li></ul>
+</div>
+
+
+
+            </li></ul>
         </div>
       </div>
     </div>
@@ -1117,6 +1132,8 @@ data-event-label="Change to Sources tab"
 <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.js"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js" integrity="sha512-9hzM/Gfa9KP1hSBlq3/zyNF/dfbcjAYwUTBWYX+xi8fzfAPHL3ILwS1ci0CTVeuXTGkRAWgRMZZwtSNV7P+nfw==" crossorigin="anonymous"></script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js"></script>
@@ -1127,7 +1144,7 @@ data-event-label="Change to Sources tab"
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Поиск';</script>
 
-<script src='/site/assets/js/sdg.js?v=20210115142507'></script>
+<script src='site/assets/js/sdg.js?v=20210115173303'></script>
 
 <script>
 $(function() {
