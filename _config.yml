@@ -5,7 +5,7 @@ create_config_forms:
 
 # Tell the Remote Theme plugin to use the Open SDG platform (Jekyll theme).
 # Recommended: set this to a particular "release" of Open SDG. For example:
-remote_theme: brockfanning/open-sdg@series-unit-field-revamp
+remote_theme: brockfanning/open-sdg@master
 
 
 # Replace this title as needed.
