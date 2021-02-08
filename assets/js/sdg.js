@@ -247,7 +247,7 @@ opensdg.autotrack = function(preset, category, action, label) {
     // Get the data from a feature's properties, according to the current year.
     getData: function(props) {
       if (props.values && props.values.length && props.values[this.currentDisaggregation][this.currentYear]) {
-        return opensdg.dataRounding(props.values[this.currentDisaggregation][this.currentYear]);
+        return props.values[this.currentDisaggregation][this.currentYear];
       }
       return false;
     },
@@ -420,7 +420,7 @@ opensdg.autotrack = function(preset, category, action, label) {
         plugin.map.addControl(L.Control.yearSlider({
           years: plugin.years,
           yearChangeCallback: function(e) {
-            plugin.currentYear = plugin.years[e.target._currentTimeIndex];
+            plugin.currentYear = new Date(e.time).getFullYear();
             plugin.updateColors();
             plugin.updateTooltips();
             plugin.selectionLegend.update();
@@ -1607,9 +1607,6 @@ function selectMinimumStartingFields(rows, selectableFieldNames, selectedUnit) {
  * @param {Array} fieldItemStates
  * @param {Array} rows
  * @return {Object} Arrays of parents keyed to children
- *
- * @TODO: This function can be a bottleneck in large datasets with a lot of
- * disaggregation values. Can this be further optimized?
  */
 function validParentsByChild(edges, fieldItemStates, rows) {
   var parentFields = getParentFieldNames(edges);
@@ -1623,17 +1620,18 @@ function validParentsByChild(edges, fieldItemStates, rows) {
       return value.value;
     });
     var parentField = parentFields[fieldIndex];
-    var childRows = rows.filter(function(row) {
-      var childNotEmpty = row[childField];
-      var parentNotEmpty = row[parentField];
-      return childNotEmpty && parentNotEmpty;
-    })
     validParentsByChild[childField] = {};
     childValues.forEach(function(childValue) {
-      var rowsWithParentValues = childRows.filter(function(row) {
-        return row[childField] == childValue;
+      var rowsWithParentValues = rows.filter(function(row) {
+        var childMatch = row[childField] == childValue;
+        var parentNotEmpty = row[parentField];
+        return childMatch && parentNotEmpty;
       });
-      validParentsByChild[childField][childValue] = getUniqueValuesByProperty(parentField, rowsWithParentValues);
+      var parentValues = rowsWithParentValues.map(function(row) {
+        return row[parentField];
+      });
+      parentValues = parentValues.filter(isElementUniqueInArray);
+      validParentsByChild[childField][childValue] = parentValues;
     });
   });
   return validParentsByChild;
@@ -1743,86 +1741,27 @@ function getChartTitle(currentTitle, allTitles, selectedUnit, selectedSeries) {
  * @param {string} defaultLabel
  * @param {Array} colors
  * @param {Array} selectableFields Field names
- * @param {Array} colorAssignments Color/striping assignments for disaggregation combinations
  * @return {Array} Datasets suitable for Chart.js
  */
-function getDatasets(headline, data, combinations, years, defaultLabel, colors, selectableFields, colorAssignments) {
-  var datasets = [], index = 0, dataset, colorIndex, color, background, border, striped, excess, combinationKey, colorAssignment;
-  var numColors = colors.length,
-      maxColorAssignments = numColors * 2;
-
-  prepareColorAssignments(colorAssignments, maxColorAssignments);
-  setAllColorAssignmentsReadyForEviction(colorAssignments);
-
+function getDatasets(headline, data, combinations, years, defaultLabel, colors, selectableFields) {
+  var datasets = [], index = 0, dataset, color, background, border;
   combinations.forEach(function(combination) {
     var filteredData = getDataMatchingCombination(data, combination, selectableFields);
     if (filteredData.length > 0) {
-      excess = (index >= maxColorAssignments);
-      if (excess) {
-        // This doesn't really matter: excess datasets won't be displayed.
-        color = getHeadlineColor();
-        striped = false;
-      }
-      else {
-        combinationKey = JSON.stringify(combination);
-        colorAssignment = getColorAssignmentByCombination(colorAssignments, combinationKey);
-        if (colorAssignment !== undefined) {
-          colorIndex = colorAssignment.colorIndex;
-          striped = colorAssignment.striped;
-          colorAssignment.readyForEviction = false;
-        }
-        else {
-          if (colorAssignmentsAreFull(colorAssignments)) {
-            evictColorAssignment(colorAssignments);
-          }
-          var openColorInfo = getOpenColorInfo(colorAssignments, colors);
-          colorIndex = openColorInfo.colorIndex;
-          striped = openColorInfo.striped;
-          colorAssignment = getAvailableColorAssignment(colorAssignments);
-          assignColor(colorAssignment, combinationKey, colorIndex, striped);
-        }
-      }
-
-      color = getColor(colorIndex, colors);
-      background = getBackground(color, striped);
-      border = getBorderDash(striped);
-
-      dataset = makeDataset(years, filteredData, combination, defaultLabel, color, background, border, excess);
+      color = getColor(index, colors);
+      background = getBackground(index, colors);
+      border = getBorderDash(index, colors);
+      dataset = makeDataset(years, filteredData, combination, defaultLabel, color, background, border);
       datasets.push(dataset);
       index++;
     }
   }, this);
-
-  datasets.sort(function(a, b) { return (a.label > b.label) ? 1 : -1; });
+  datasets.sort(function(a, b) { return a.label > b.label; });
   if (headline.length > 0) {
     dataset = makeHeadlineDataset(years, headline, defaultLabel);
     datasets.unshift(dataset);
   }
   return datasets;
-}
-
-/**
- * @param {Array} colorAssignments
- * @param {int} maxColorAssignments
- */
-function prepareColorAssignments(colorAssignments, maxColorAssignments) {
-  while (colorAssignments.length < maxColorAssignments) {
-    colorAssignments.push({
-      combination: null,
-      colorIndex: null,
-      striped: false,
-      readyForEviction: false,
-    });
-  }
-}
-
-/**
- * @param {Array} colorAssignments
- */
-function setAllColorAssignmentsReadyForEviction(colorAssignments) {
-  for (var i = 0; i < colorAssignments.length; i++) {
-    colorAssignments[i].readyForEviction = true;
-  }
 }
 
 /**
@@ -1840,113 +1779,32 @@ function getDataMatchingCombination(data, combination, selectableFields) {
 }
 
 /**
- * @param {Array} colorAssignments
- * @param {string} combination
- * @return {Object|undefined} Color assignment object if found.
- */
-function getColorAssignmentByCombination(colorAssignments, combination) {
-  return colorAssignments.find(function(assignment) {
-    return assignment.combination === combination;
-  });
-}
-
-/**
- * @param {Array} colorAssignments
- * @return {boolean}
- */
-function colorAssignmentsAreFull(colorAssignments) {
-  for (var i = 0; i < colorAssignments.length; i++) {
-    if (colorAssignments[i].combination === null) {
-      return false;
-    }
-  }
-  return true;
-}
-
-/**
- * @param {Array} colorAssignments
- */
-function evictColorAssignment(colorAssignments) {
-  for (var i = 0; i < colorAssignments.length; i++) {
-    if (colorAssignments[i].readyForEviction) {
-      colorAssignments[i].combination = null;
-      colorAssignments[i].colorIndex = null;
-      colorAssignments[i].striped = false;
-      colorAssignments[i].readyForEviction = false;
-      return;
-    }
-  }
-  throw 'Could not evict color assignment';
-}
-
-/**
- * @param {Array} colorAssignments
- * @param {Array} colors
- * @return {Object} Object with 'colorIndex' and 'striped' properties.
- */
-function getOpenColorInfo(colorAssignments, colors) {
-  // First look for normal colors, then striped.
-  var stripedStates = [false, true];
-  for (var i = 0; i < stripedStates.length; i++) {
-    var stripedState = stripedStates[i];
-    var assignedColors = colorAssignments.filter(function(colorAssignment) {
-      return colorAssignment.striped === stripedState && colorAssignment.colorIndex !== null;
-    }).map(function(colorAssignment) {
-      return colorAssignment.colorIndex;
-    });
-    if (assignedColors.length < colors.length) {
-      for (var colorIndex = 0; colorIndex < colors.length; colorIndex++) {
-        if (!(assignedColors.includes(colorIndex))) {
-          return {
-            colorIndex: colorIndex,
-            striped: stripedState,
-          }
-        }
-      }
-    }
-  }
-  throw 'Could not find open color';
-}
-
-/**
- * @param {Array} colorAssignments
- * @return {Object|undefined} Color assignment object if found.
- */
-function getAvailableColorAssignment(colorAssignments) {
-  return colorAssignments.find(function(assignment) {
-    return assignment.combination === null;
-  });
-}
-
-/**
- * @param {Object} colorAssignment
- * @param {string} combination
- * @param {int} colorIndex
- * @param {boolean} striped
- */
-function assignColor(colorAssignment, combination, colorIndex, striped) {
-  colorAssignment.combination = combination;
-  colorAssignment.colorIndex = colorIndex;
-  colorAssignment.striped = striped;
-  colorAssignment.readyForEviction = false;
-}
-
-/**
- * @param {int} colorIndex
+ * @param {int} datasetIndex
  * @param {Array} colors
  * @return Color from a list
  */
-function getColor(colorIndex, colors) {
-  return '#' + colors[colorIndex];
+function getColor(datasetIndex, colors) {
+  if (datasetIndex >= colors.length) {
+    // Support double the number of colors, because we'll use striped versions.
+    return '#' + colors[datasetIndex - colors.length];
+  } else {
+    return '#' + colors[datasetIndex];
+  }
 }
 
 /**
- * @param {string} color
- * @param {boolean} striped
+ * @param {int} datasetIndex
+ * @param {Array} colors
  * @return Background color or pattern
  */
-function getBackground(color, striped) {
-  return striped ? getStripes(color) : color;
+function getBackground(datasetIndex, colors) {
+  var color = getColor(datasetIndex, colors);
+
+  if (datasetIndex >= colors.length) {
+    color = getStripes(color);
+  }
+
+  return color;
 }
 
 /**
@@ -1961,11 +1819,12 @@ function getStripes(color) {
 }
 
 /**
- * @param {boolean} striped
+ * @param {int} datasetIndex
+ * @param {Array} colors
  * @return {Array|undefined} An array produces dashed lines on the chart
  */
-function getBorderDash(striped) {
-  return striped ? [5, 5] : undefined;
+function getBorderDash(datasetIndex, colors) {
+  return datasetIndex >= colors.length ? [5, 5] : undefined;
 }
 
 /**
@@ -1978,7 +1837,7 @@ function getBorderDash(striped) {
  * @param {Array} border
  * @return {Object} Dataset object for Chart.js
  */
-function makeDataset(years, rows, combination, labelFallback, color, background, border, excess) {
+function makeDataset(years, rows, combination, labelFallback, color, background, border) {
   var dataset = getBaseDataset();
   return Object.assign(dataset, {
     label: getCombinationDescription(combination, labelFallback),
@@ -1990,7 +1849,6 @@ function makeDataset(years, rows, combination, labelFallback, color, background,
     borderDash: border,
     borderWidth: 2,
     data: prepareDataForDataset(years, rows),
-    excess: excess,
   });
 }
 
@@ -2299,7 +2157,6 @@ function sortData(rows, selectedUnit) {
   this.colors = opensdg.chartColors(this.indicatorId);
   this.maxDatasetCount = 2 * this.colors.length;
   this.hasStartValues = Array.isArray(this.startValues) && this.startValues.length > 0;
-  this.colorAssignments = [];
 
   this.clearSelectedFields = function() {
     this.selectedFields = [];
@@ -2478,7 +2335,7 @@ function sortData(rows, selectedUnit) {
     }
 
     var combinations = helpers.getCombinationData(this.selectedFields);
-    var datasets = helpers.getDatasets(headline, filteredData, combinations, this.years, this.country, this.colors, this.selectableFields, this.colorAssignments);
+    var datasets = helpers.getDatasets(headline, filteredData, combinations, this.years, this.country, this.colors, this.selectableFields);
     var selectionsTable = helpers.tableDataFromDatasets(datasets, this.years);
 
     var datasetCountExceedsMax = false;
@@ -2497,7 +2354,7 @@ function sortData(rows, selectedUnit) {
 
     this.onDataComplete.notify({
       datasetCountExceedsMax: datasetCountExceedsMax,
-      datasets: datasets.filter(function(dataset) { return dataset.excess !== true }),
+      datasets: datasetCountExceedsMax ? datasets.slice(0, this.maxDatasetCount) : datasets,
       labels: this.years,
       headlineTable: helpers.getHeadlineTable(headline, this.selectedUnit),
       selectionsTable: selectionsTable,
@@ -2862,12 +2719,6 @@ var indicatorView = function (model, options) {
     });
   };
 
-  this.alterTableConfig = function(config, info) {
-    opensdg.tableConfigAlterations.forEach(function(callback) {
-      callback(config, info);
-    });
-  };
-
   this.updateChartTitle = function(chartTitle) {
     if (typeof chartTitle !== 'undefined') {
       $('.chart-title').text(chartTitle);
@@ -3142,7 +2993,7 @@ var indicatorView = function (model, options) {
     }
   };
 
-  var initialiseDataTable = function(el, info) {
+  var initialiseDataTable = function(el) {
     var datatables_options = options.datatables_options || {
       paging: false,
       bInfo: false,
@@ -3154,7 +3005,6 @@ var indicatorView = function (model, options) {
 
     datatables_options.aaSorting = [];
 
-    view_obj.alterTableConfig(datatables_options, info);
     table.DataTable(datatables_options);
     table.removeAttr('role');
     table.find('thead th').removeAttr('rowspan').removeAttr('colspan').removeAttr('aria-label');
@@ -3377,12 +3227,8 @@ var indicatorView = function (model, options) {
 
       $(el).append(currentTable);
 
-      // initialise data table and provide some info for alterations.
-      var alterationInfo = {
-        table: table,
-        indicatorId: indicatorId,
-      };
-      initialiseDataTable(el, alterationInfo);
+      // initialise data table
+      initialiseDataTable(el);
 
       $(el).removeClass('table-has-no-data');
       $('#selectionTableFooter').show();
@@ -3654,9 +3500,6 @@ var indicatorSearch = function() {
       resultsCount: resultItems.length,
       didYouMean: (alternativeSearchTerms.length > 0) ? alternativeSearchTerms : false,
     }));
-
-    // Hide the normal header search.
-    $('#search').css('visibility', 'hidden');
   }
 
   // Helper function to make a search query "fuzzier", using the ~ syntax.
@@ -3878,8 +3721,8 @@ $(function() {
       }).join('');
       var div = L.DomUtil.create('div', 'selection-legend');
       div.innerHTML = L.Util.template(controlTpl, {
-        lowValue: opensdg.dataRounding(this.plugin.valueRange[0]),
-        highValue: opensdg.dataRounding(this.plugin.valueRange[1]),
+        lowValue: this.plugin.valueRange[0],
+        highValue: this.plugin.valueRange[1],
         legendSwatches: swatches,
       });
       return div;
@@ -3968,14 +3811,7 @@ $(function() {
 
     // Hijack the displayed date format.
     _getDisplayDateFormat: function(date){
-      var time = date.toISOString().slice(0, 10);
-      var match = this.options.years.find(function(y) { return y.time == time; });
-      if (match) {
-        return match.display;
-      }
-      else {
-        return date.getFullYear();
-      }
+      return date.getFullYear();
     },
 
     // Override the _createButton method to prevent the date from being a link.
@@ -4050,7 +3886,6 @@ $(function() {
 
   // Helper function to compose the full widget.
   L.Control.yearSlider = function(options) {
-    var years = getYears(options.years);
     // Extend the defaults.
     options = L.Util.extend(defaultOptions, options);
     // Hardcode the timeDimension to year intervals.
@@ -4058,8 +3893,8 @@ $(function() {
       // We pad our years to at least January 2nd, so that timezone issues don't
       // cause any problems. This converts the array of years into a comma-
       // delimited string of YYYY-MM-DD dates.
-      times: years.map(function(y) { return y.time }).join(','),
-      currentTime: new Date(years[0].time).getTime(),
+      times: options.years.join('-01-02,') + '-01-02',
+      currentTime: new Date(options.years[0] + '-01-02').getTime(),
     });
     // Create the player.
     options.player = new L.TimeDimension.Player(options.playerOptions, options.timeDimension);
@@ -4067,45 +3902,9 @@ $(function() {
     if (typeof options.yearChangeCallback === 'function') {
       options.timeDimension.on('timeload', options.yearChangeCallback);
     };
-    // Pass in our years for later use.
-    options.years = years;
     // Return the control.
     return new L.Control.YearSlider(options);
   };
-
-  function isYear(year) {
-    var parsedInt = parseInt(year, 10);
-    return /^\d+$/.test(year) && parsedInt > 1900 && parsedInt < 3000;
-  }
-
-  function getYears(years) {
-    // Support an array of years or an array of strings starting with years.
-    var day = 2;
-    return years.map(function(year) {
-      var mapped = {
-        display: year,
-        time: year,
-      };
-      // Usually this is a year.
-      if (isYear(year)) {
-        mapped.time = year + '-01-02';
-        // Start over that day variable.
-        day = 2;
-      }
-      // Otherwise we get the year from the beginning of the string.
-      else {
-        for (var delimiter of ['-', '.', ' ', '/']) {
-          var parts = year.split(delimiter);
-          if (parts.length > 1 && isYear(parts[0])) {
-            mapped.time = parts[0] + '-01-0' + day;
-            day += 1;
-            break;
-          }
-        }
-      }
-      return mapped;
-    });
-  }
 }());
 /*
  * Leaflet fullscreenAccessible.
