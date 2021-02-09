@@ -7,6 +7,10 @@ create_config_forms:
 # Recommended: set this to a particular "release" of Open SDG. For example:
 remote_theme: brockfanning/open-sdg@alternate-unit-and-series-columns
 
+data_fields:
+  units: UNIT_MEASURE
+  series: SERIES
+
 
 # Replace this title as needed.
 title: Indicators For The Sustainable Development Goals
