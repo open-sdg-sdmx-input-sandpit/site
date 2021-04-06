@@ -135,7 +135,7 @@ var translations = {
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" crossorigin="">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
         <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css" crossorigin="">
-        <link rel="stylesheet" href="/site/assets/css/style.css?v=20210406012329">
+        <link rel="stylesheet" href="/site/assets/css/style.css?v=20210406154918">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet" crossorigin="">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -150,7 +150,7 @@ var translations = {
 <!-- <div class="container"> -->
 
 
-<script>translations['header'] = {"alpha":"Альфа","default_contrast":"стандартный контраст","disable_high_contrast":"Отключить высокую контрастность","disclaimer":"Это сайт находится в разработке. Мы рады вашим отзывам.","enable_high_contrast":"Включить высокую контрастность","high_contrast":"высокий контраст","skip_link":"Перейти к главному содержанию","tag_line":"17 Целей, чтобы преобразовать наш мир"};</script>
+<script>translations['header'] = {"alpha":"Альфа","default_contrast":"стандартный контраст","disable_high_contrast":"Отключить высокую контрастность","disclaimer":"Это сайт находится в разработке. Мы рады вашим отзывам.","enable_high_contrast":"Включить высокую контрастность","high_contrast":"высокий контраст","skip_link":"Перейти к главному содержанию","tag_line":"17 Целей, чтобы преобразовать наш мир","toggle_menu":"Переключайте меню. Нажмите, чтобы развернуть или свернуть меню.","toggle_search":"Поисковая переключатель. Нажмите, чтобы развернуть или свернуть панель поиска."};</script>
 
 <a class="sr-only sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Перейти к главному содержанию</a>
 <div id="disclaimer">
@@ -193,7 +193,7 @@ var translations = {
     <nav class="navbar navbar-default" id="main-nav">
       <ul class="top-level">
     <li id="menuToggle"
-        aria-label=""
+        aria-label="Переключайте меню. Нажмите, чтобы развернуть или свернуть меню."
         aria-haspopup="true">
         <button data-target="menu-mobile" aria-expanded="false">Меню</button>
         <ul class="nav navbar-nav menu-target contrast-switcher" id="menu-mobile"><li class="nav-link ">
@@ -207,7 +207,7 @@ var translations = {
     </li><li class="nav-link ">
     <a href="/site/ru/faq">Часто задаваемые вопросы</a>
     </li><li class="nav-link ">
-    <a href="/site/ru/news"></a>
+    <a href="/site/ru/news">Обновления</a>
     </li><li class="language-toggle-menu-header">
     
 
@@ -236,7 +236,7 @@ var translations = {
 
     </li>
     <li id="searchToggle"
-        aria-label=""
+        aria-label="Поисковая переключатель. Нажмите, чтобы развернуть или свернуть панель поиска."
         aria-haspopup="true">
         <button data-target="search-mobile" aria-expanded="false">Поиск</button>
         <div id="search-mobile" class="menu-target">
@@ -268,7 +268,7 @@ var translations = {
     </li><li class="nav-link ">
     <a href="/site/ru/faq">Часто задаваемые вопросы</a>
     </li><li class="nav-link ">
-    <a href="/site/ru/news"></a>
+    <a href="/site/ru/news">Обновления</a>
     </li><li class="language-toggle-menu-header">
     
 
@@ -314,7 +314,7 @@ var translations = {
       >
         <% if(allowedFields.indexOf(fieldItem.field) == -1) { %><h6><% } else { %><h5><% } %>
           <span aria-hidden="true"><%=translations.t(fieldItem.field)%><i class="fa fa-chevron-down"></i></span>
-          <span class="sr-only"> <%=translations.t(fieldItem.field)%></span>
+          <span class="sr-only">Показать подкатегории: <%=translations.t(fieldItem.field)%></span>
         <% if(allowedFields.indexOf(fieldItem.field) == -1) { %></h6><% } else { %></h5><% } %>
       </button>
       <div class="bar">
@@ -373,7 +373,7 @@ var translations = {
   <% } %>
 </script>
 
-<script>translations['indicator'] = {"chart":"График","clear_all":"Очистить всё","clear_selections":"Очистить выделенное","data_not_available":"Эти данные не доступны. Пожалуйста, выберите альтернативные данные для отображения.","dataset_size_warning":"В таблице слишком много данных, чтобы показать в графике. Чтобы увидеть все, удалите выделенное.","download_chart":"Скачать график CSV","download_chart_image":"Загрузить изображение диаграммы","download_chart_image_title":"Скачать диаграмму как изображение","download_csv":"Скачать CSV","download_csv_title":"Скачать в формате CSV","download_geojson":"Скачать GeoJSON","download_geojson_title":"Скачать в формате GeoJSON","download_headline":"Скачать заголовки CSV","download_headline_title":"Скачать данные заголовков в формате CSV","download_source":"Скачать исходные CSV","download_source_sdmx":"Скачать исходные SDMX","download_source_sdmx_title":"Скачать исходные данные в формате SDMX","download_source_title":"Скачать исходные данные в формате CSV","download_table":"Скачать табличные CSV","edit":"Редактировать","edit_data":"Редактировать данные","edit_metadata":"Редактировать метаданные","footnote":"Сноска","geographical_area":"Географический район","global_metadata":"Глобальные метаданные","global_metadata_blurb":"В этой таблице представлена информация для метаданных показателей ЦУР, определенных Статистической комиссией ООН. Полные глобальные метаданные представлены Статистическим отделом ООН.","legend_help":"Нажмите на легенду, чтобы убрать линии из графика.","loading":"Загрузка","loading_map":"Загрузка карты","map":"Карта","national_metadata":"Национальные метаданные","national_metadata_blurb":"В этой таблице представлены метаданные для фактического показателя, доступного из статистики ближайшей к соответствующему глобальному индикатору ЦУР. Обратите внимание, что даже если глобальный индикатор ЦУР полностью доступен из статистики, по этой таблице следует проконсультироваться для получения информации о национальной методологии и других специфичных метаданных.","no_data_hint":"Нет имеющихся вариантов из-за фильтров наверху.","select_all":"Выделить всё","series":"Серии","series_help":"Выберите категории из выпадающего меню внизу, чтобы увидеть разные разбивки данных. Несколько не будет доступно, пока более высокий уровень не выбран. ","source":"Источник","sources":"Источники","sub_categories":"Субкатегории","table":"Таблица","unit_of_measurement":"Единица измерения","units_type":"Вид единиц","variable_hint":"Доступно, когда выбрано","view_indicator_list":"Посмотреть список индикаторов этой цели"};</script>
+<script>translations['indicator'] = {"annotation_2030_target":"2030 год Цель","announce_data_added":"Обновлены диаграмма и таблица для включения данных.","announce_data_not_available":"Диаграмма и таблица не содержат данных.","announce_data_removed":"Обновлены диаграмма и таблица для исключения данных.","chart":"График","chart_annotation":"Диаграмма аннотация","clear_all":"Очистить всё","clear_selections":"Очистить выделенное","data_keyboard_navigation":"Нажмите клавишу Enter для просмотра точек данных с помощью клавиш со стрелками вправо и влево.","data_not_available":"Эти данные не доступны. Пожалуйста, выберите альтернативные данные для отображения.","data_tabular_alternative":"Альтернативный вариант табличных данных см. в таблице табличных данных.","dataset_size_warning":"В таблице слишком много данных, чтобы показать в графике. Чтобы увидеть все, удалите выделенное.","download_chart":"Скачать график CSV","download_chart_image":"Загрузить изображение диаграммы","download_chart_image_title":"Скачать диаграмму как изображение","download_csv":"Скачать CSV","download_csv_title":"Скачать в формате CSV","download_geojson":"Скачать GeoJSON","download_geojson_title":"Скачать в формате GeoJSON","download_headline":"Скачать заголовки CSV","download_headline_title":"Скачать данные заголовков в формате CSV","download_source":"Скачать исходные CSV","download_source_sdmx":"Скачать исходные SDMX","download_source_sdmx_title":"Скачать исходные данные в формате SDMX","download_source_title":"Скачать исходные данные в формате CSV","download_table":"Скачать табличные CSV","edit":"Редактировать","edit_configuration":"Редактировать Конфигурация","edit_data":"Редактировать данные","edit_metadata":"Редактировать метаданные","footnote":"Сноска","geographical_area":"Географический район","global_metadata":"Глобальные метаданные","global_metadata_blurb":"В этой таблице представлена информация для метаданных показателей ЦУР, определенных Статистической комиссией ООН. Полные глобальные метаданные представлены Статистическим отделом ООН.","legend_help":"Нажмите на легенду, чтобы убрать линии из графика.","loading":"Загрузка","loading_map":"Загрузка карты","map":"Карта","map_search":"Поиск","map_search_hide":"Скрыть поиск","map_search_show":"Показать поиск","map_year_slider":"Годовой слайдер","national_metadata":"Национальные метаданные","national_metadata_blurb":"В этой таблице представлены метаданные для фактического показателя, доступного из статистики ближайшей к соответствующему глобальному индикатору ЦУР. Обратите внимание, что даже если глобальный индикатор ЦУР полностью доступен из статистики, по этой таблице следует проконсультироваться для получения информации о национальной методологии и других специфичных метаданных.","next":"Следующий индикатор","no_data_hint":"Нет имеющихся вариантов из-за фильтров наверху.","plot_legend_description":"Легенда сюжета: список линий, включенных в график","previous":"Предыдущий показатель","select_all":"Выделить всё","series":"Серии","series_help":"Выберите категории из выпадающего меню внизу, чтобы увидеть разные разбивки данных. Несколько не будет доступно, пока более высокий уровень не выбран. ","source":"Источник","sources":"Источники","status":"Состояние индикатора","sub_categories":"Субкатегории","sub_categories_show":"Показать подкатегории:","table":"Таблица","table_column_sort":"Нажмите, чтобы отсортировать по этой колонке","tags":"Теги","unit":"Единица","unit_of_measurement":"Единица измерения","units_type":"Вид единиц","variable_hint":"Доступно, когда выбрано","view_indicator_list":"Посмотреть список индикаторов этой цели"};</script>
 
 <script>translations['data'] = null;</script>
 
@@ -423,6 +423,13 @@ var translations = {
 
   
 
+<div class="row" id="page-content">
+  <div class="col-xs-12">
+    <p>“Poverty headcount ratio at $1.90 a day” figures from the World Bank Development Research Group. Underlying data provided by the ONS from the EU-Statistics on Income and Living Conditions survey (EU-SILC).</p>
+
+  </div>
+</div>
+
 
   
 
@@ -431,13 +438,10 @@ var translations = {
   id="indicatorData"
   data-indicatorid='indicator_1-1-1'
   data-id="1-1-1"
-  data-country="Australia"
-  data-charttitle="Доля населения, живущего за международной
-чертой бедности, в разбивке по полу, возрасту,
-статусу занятости и месту проживания (городское/сельское)
-"
+  data-country="UK"
+  data-charttitle="Proportion of population below the international poverty line"
   data-charttitles="[]"
-  data-measurementunit=""
+  data-measurementunit="Percentage (%)"
   data-showdata="true"
   data-graphtype="line"
   data-geocoderegex=""
@@ -446,7 +450,7 @@ var translations = {
   data-graphlimits="[]"
   data-stackeddisaggregation=""
   data-graphannotations="[]"
-  data-indicatordownloads="null"
+  data-indicatordownloads="{&quot;custom.download_source_sdmx&quot;:{&quot;href&quot;:&quot;downloads/data-sdmx/1.1.1.xml&quot;}}"
 >
   
   <span role="status" class="sr-only" id="indicator-data-view-status"></span>
@@ -478,10 +482,7 @@ var translations = {
 
     <h3>Headline data</h3>
     <table class="table-responsive table table-hover dataTable no-footer" role="grid">
-      <caption>Доля населения, живущего за международной
-чертой бедности, в разбивке по полу, возрасту,
-статусу занятости и месту проживания (городское/сельское)
-</caption>
+      <caption>Proportion of population below the international poverty line</caption>
       <thead>
         
       </thead>
@@ -494,13 +495,13 @@ var translations = {
   <div id="datatableFooter">
     
     
-    <p>Географический район: </p>
+    <p>Географический район: UK</p>
     
     
-    <p>Единица измерения: </p>
+    <p>Единица измерения: Percentage (%)</p>
     
     
-    <p>Сноска: </p>
+    <p>Сноска: As differences in the cost of living across the world evolve, the international poverty line has to be periodically updated using new PPP price data to reflect these changes. The last change was in October  2015, when the World Bank adopted $1.90 as the international poverty line using the 2011 PPP. Prior to that, the 2008 update set the international poverty line at $1.25 using the 2005 PPP.</p>
     
   </div>
 
@@ -514,7 +515,7 @@ var translations = {
   <div class="async-loaded spacer medium" style="display:none;">
 
     <div style="display: none;">
-  <span id="table-alternative"></span>
+  <span id="table-alternative">Альтернативный вариант табличных данных см. в таблице табличных данных.</span>
 </div>
 <ul class="nav nav-tabs non-stacking-tabs data-view" role="tablist">
   <li role="presentation" class="nav-item active">
@@ -537,7 +538,7 @@ data-event-label="Change to Table tab"
     
 
     <div id="dataset-size-warning" style="display:none" role="alert">
-      <i class="fa fa-bolt"><span class="sr-only"></span></i>
+      <i class="fa fa-bolt"><span class="sr-only">Предупреждение:</span></i>
       В таблице слишком много данных, чтобы показать в графике. Чтобы увидеть все, удалите выделенное.
     </div>
 
@@ -546,10 +547,7 @@ data-event-label="Change to Table tab"
     <div id="selectionsChart">
       <figure role="group">
         <div id="chart-canvas">
-          <h4 id="chart-heading" class="chart-title">Доля населения, живущего за международной
-чертой бедности, в разбивке по полу, возрасту,
-статусу занятости и месту проживания (городское/сельское)
-</h4>
+          <h4 id="chart-heading" class="chart-title">Proportion of population below the international poverty line</h4>
           <div id="chart" class="plot-container">
             
 <canvas
@@ -794,11 +792,20 @@ opensdg.chartConfigAlter(function(config, info) {
         
 
         
+        <dt>Географический район:</dt>
+        <dd>UK</dd>
+        
 
+        
+        <dt>Единица измерения:</dt>
+        <dd>Percentage (%)</dd>
         
 
         
 
+        
+        <dt>Сноска:</dt>
+        <dd>As differences in the cost of living across the world evolve, the international poverty line has to be periodically updated using new PPP price data to reflect these changes. The last change was in October  2015, when the World Bank adopted $1.90 as the international poverty line using the 2011 PPP. Prior to that, the 2008 update set the international poverty line at $1.25 using the 2005 PPP.</dd>
         
     <dl>
 </div>
@@ -817,7 +824,7 @@ opensdg.chartConfigAlter(function(config, info) {
   </div>
   <div role="tabpanel" class="tab-pane" id="tableview">
     <div style="display: none;">
-      <span id="column-sort-info"></span>
+      <span id="column-sort-info">Нажмите, чтобы отсортировать по этой колонке</span>
     </div>
     <div id="selectionsTable"></div>
 
@@ -830,11 +837,20 @@ opensdg.chartConfigAlter(function(config, info) {
         
 
         
+        <dt>Географический район:</dt>
+        <dd>UK</dd>
+        
 
+        
+        <dt>Единица измерения:</dt>
+        <dd>Percentage (%)</dd>
         
 
         
 
+        
+        <dt>Сноска:</dt>
+        <dd>As differences in the cost of living across the world evolve, the international poverty line has to be periodically updated using new PPP price data to reflect these changes. The last change was in October  2015, when the World Bank adopted $1.90 as the international poverty line using the 2011 PPP. Prior to that, the 2008 update set the international poverty line at $1.25 using the 2005 PPP.</dd>
         
     <dl>
 </div>
@@ -957,7 +973,7 @@ data-event-label="Change to Sources tab"
         <th scope="row">Географический охват </th>
         <td>
           
-            
+            <p>UK</p>
 
           
         </td>
@@ -971,7 +987,7 @@ data-event-label="Change to Sources tab"
         <th scope="row">Единица измерения </th>
         <td>
           
-            
+            <p>Percentage (%)</p>
 
           
         </td>
@@ -1066,7 +1082,7 @@ data-event-label="Change to Sources tab"
       
       
       <tr>
-        <th scope="row">metadata_fields.rationale_interpretation </th>
+        <th scope="row">Рациональное и интерпретация </th>
         <td>
           
             
@@ -1112,8 +1128,8 @@ data-event-label="Change to Sources tab"
             
 
             
-              <a href="https://github.com/open-sdg-sdmx-input-sandpit/data/commit/11ac12db8c23d3742d8b7e3792f2d2ec46f014e1" target="_blank">
-                2021-01-15: see changes on GitHub <span class="visuallyhidden">открывается в новой вкладке</span>
+              <a href="https://github.com/open-sdg-sdmx-input-sandpit/data/commit/2925376d0964815161ffb52b71850c00e4a1c74f" target="_blank">
+                2021-04-06: see changes on GitHub <span class="visuallyhidden">открывается в новой вкладке</span>
               </a>
             
 
@@ -1317,7 +1333,7 @@ data-event-label="Change to Sources tab"
       
       
       <tr>
-        <th scope="row">Депозитарное учреждение ООН  </th>
+        <th scope="row">Депозитарное учреждение ООН </th>
         <td>
           
             <p>World Bank</p>
@@ -1582,7 +1598,7 @@ data-event-label="Change to Sources tab"
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Поиск';</script>
 
-<script src='/site/assets/js/sdg.js?v=20210406012329'></script>
+<script src='/site/assets/js/sdg.js?v=20210406154918'></script>
 
 <script>
 $(function() {

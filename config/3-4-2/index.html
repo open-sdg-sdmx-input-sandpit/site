@@ -127,7 +127,7 @@ var translations = {
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" crossorigin="">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
         <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css" crossorigin="">
-        <link rel="stylesheet" href="/site/assets/css/style.css?v=20210406012329">
+        <link rel="stylesheet" href="/site/assets/css/style.css?v=20210406154918">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet" crossorigin="">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -489,7 +489,7 @@ var translations = {
 
     // Set values according to this site's configuration.
       try {
-        var currentValue = normalizeCurrentValue('computation_units', "");
+        var currentValue = normalizeCurrentValue('computation_units', "Rate per 100,000 population");
         var propertyEditor = editor.getEditor('root.computation_units');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -511,7 +511,7 @@ var translations = {
       }
     propertyEditorAccessibilityFixes(editor.getEditor('root.copyright'));
       try {
-        var currentValue = normalizeCurrentValue('data_footnote', "");
+        var currentValue = normalizeCurrentValue('data_footnote', "Suicide rates per 100,000 population have been age-standardised to allow comparison between populations which may contain different proportions of people of different ages. Suicide rates by age are based on age-specific suicide rates per 100,000 population. Age-specific rates are calculated where there are fewer than 20 deaths are potentially unreliable. These figures are denoted with a 'u' in Source 1. Rates were not calculated where there were fewer than 3 death registrations.");
         var propertyEditor = editor.getEditor('root.data_footnote');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -665,7 +665,7 @@ var translations = {
       }
     propertyEditorAccessibilityFixes(editor.getEditor('root.graph_stacked_disaggregation'));
       try {
-        var currentValue = normalizeCurrentValue('graph_title', "global_indicators.3-4-2-title");
+        var currentValue = normalizeCurrentValue('graph_title', "Suicide mortality rate per 100,000 population");
         var propertyEditor = editor.getEditor('root.graph_title');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -720,7 +720,7 @@ var translations = {
       }
     propertyEditorAccessibilityFixes(editor.getEditor('root.indicator_number'));
       try {
-        var currentValue = normalizeCurrentValue('national_geographical_coverage', "");
+        var currentValue = normalizeCurrentValue('national_geographical_coverage', "United Kingdom");
         var propertyEditor = editor.getEditor('root.national_geographical_coverage');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -731,7 +731,7 @@ var translations = {
       }
     propertyEditorAccessibilityFixes(editor.getEditor('root.national_geographical_coverage'));
       try {
-        var currentValue = normalizeCurrentValue('page_content', "");
+        var currentValue = normalizeCurrentValue('page_content', "#### In **2018**… \n* There were 6,507 suicides registered in the UK, an age-standardised rate of 11.2 deaths per 100,000 population; the latest rate is significantly higher than that in 2017 and represents the first increase since 2013.\n* Three-quarters of registered deaths in 2018 were among men (4,903 deaths), which has been the case since the mid-1990s.\n* The UK male suicide rate of 17.2 deaths per 100,000 represents a significant increase from the rate in 2017; for females, the UK rate was 5.4 deaths per 100,000, consistent with the rates over the past 10 years. \n* Scotland had the highest suicide rate in GB with 16.1 deaths per 100,000 persons (784 deaths), followed by Wales with a rate of 12.8 per 100,000 (349 deaths) and England the lowest with 10.3 deaths per 100,000 (5,021 deaths).\n* Males aged 45 to 49 years had the highest age-specific suicide rate (27.1 deaths per 100,000 males); for females, the age group with the highest rate was also 45 to 49 years, at 9.2 deaths per 100,000.\n* Despite having a low number of deaths overall, rates among the under 25s have generally increased in recent years, particularly 10 to 24 year old females where the rate has increased significantly since 2012 to its highest level with 3.3 deaths per 100,000 females in 2018.\n\n#### See the [ONS 2018 report](https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/bulletins/suicidesintheunitedkingdom/2018registrations) for more information and a definition for suicide\n\nInformation on the [suicide prevention profile](https://www.gov.uk/government/collections/suicide-prevention-profile) is available from Public Health England. If you are struggling to cope, please call Samaritans free on 116 123 (UK and Ireland), email jo@samaritans.org, or visit the [Samaritans website](https://www.samaritans.org) to find details of the nearest branch. \n\nFurther information is available on the [Suicide Prevention Profile](https://fingertips.phe.org.uk/profile-group/mental-health/profile/suicide).\n\n[Further Quality and Methodology information](https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/methodologies/suicideratesintheukqmi) is available.");
         var propertyEditor = editor.getEditor('root.page_content');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -742,7 +742,7 @@ var translations = {
       }
     propertyEditorAccessibilityFixes(editor.getEditor('root.page_content'));
       try {
-        var currentValue = normalizeCurrentValue('reporting_status', "notstarted");
+        var currentValue = normalizeCurrentValue('reporting_status', "complete");
         var propertyEditor = editor.getEditor('root.reporting_status');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -879,7 +879,7 @@ var translations = {
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/site/assets/js/sdg.js?v=20210406012329'></script>
+<script src='/site/assets/js/sdg.js?v=20210406154918'></script>
 
 <script>
 $(function() {

@@ -127,7 +127,7 @@ var translations = {
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" crossorigin="">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
         <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css" crossorigin="">
-        <link rel="stylesheet" href="/site/assets/css/style.css?v=20210406012329">
+        <link rel="stylesheet" href="/site/assets/css/style.css?v=20210406154918">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet" crossorigin="">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -520,7 +520,18 @@ var translations = {
         console.log(e.message);
         console.log('Unable to set config key: data_footnote');
       }
-    propertyEditorAccessibilityFixes(editor.getEditor('root.data_footnote'));propertyEditorAccessibilityFixes(editor.getEditor('root.data_non_statistical'));
+    propertyEditorAccessibilityFixes(editor.getEditor('root.data_footnote'));
+      try {
+        var currentValue = normalizeCurrentValue('data_non_statistical', true);
+        var propertyEditor = editor.getEditor('root.data_non_statistical');
+        propertyEditor.setValue(null);
+        propertyEditor.setValue(currentValue);
+      }
+      catch (e) {
+        console.log(e.message);
+        console.log('Unable to set config key: data_non_statistical');
+      }
+    propertyEditorAccessibilityFixes(editor.getEditor('root.data_non_statistical'));
       try {
         var currentValue = normalizeCurrentValue('data_notice_class', "");
         var propertyEditor = editor.getEditor('root.data_notice_class');
@@ -731,7 +742,7 @@ var translations = {
       }
     propertyEditorAccessibilityFixes(editor.getEditor('root.national_geographical_coverage'));
       try {
-        var currentValue = normalizeCurrentValue('page_content', "");
+        var currentValue = normalizeCurrentValue('page_content', "**Non-statistical indicator**\n\nWe have identified the following policies relevant to this indicator…\n\n[The Civil Contingencies Act 2004 (CCA)](https://www.legislation.gov.uk/ukpga/2004/36/pdfs/ukpga_20040036_en.pdf) - Requires Local Authorities (as defined Category 1 responders) to assess civil contingencies risks and communicate them to the public.\n\n[Emergency Preparedness - Chapter 4 Local responder risk assessment duty (PDF 1.27 MB)](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/61027/Chapter-4-Local_20Responder-Risk-assessment-duty-revised-March.pdf) - Guidance and further detail for Local Authorities fulfilling their statutory duties through completing Community Risk Registers.\n\n[Community resilience framework for practitioners](https://www.gov.uk/government/publications/community-resilience-framework-for-practitioners) - This guidance helps emergency planners ensure communities are central to emergency planning, response and recovery.\n\nThe UK’s knowledge platform for disaster risk reduction on [PreventionWeb]( https://www.preventionweb.net/english/countries/europe/gbr/) is also relevant to this indicator.");
         var propertyEditor = editor.getEditor('root.page_content');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -742,7 +753,7 @@ var translations = {
       }
     propertyEditorAccessibilityFixes(editor.getEditor('root.page_content'));
       try {
-        var currentValue = normalizeCurrentValue('reporting_status', "notstarted");
+        var currentValue = normalizeCurrentValue('reporting_status', "complete");
         var propertyEditor = editor.getEditor('root.reporting_status');
         propertyEditor.setValue(null);
         propertyEditor.setValue(currentValue);
@@ -879,7 +890,7 @@ var translations = {
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/site/assets/js/sdg.js?v=20210406012329'></script>
+<script src='/site/assets/js/sdg.js?v=20210406154918'></script>
 
 <script>
 $(function() {
